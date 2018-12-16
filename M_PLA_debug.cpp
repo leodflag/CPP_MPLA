@@ -57,12 +57,12 @@ int findMax(int sum[],int sum_len){
 		return Max_i;	
 }
 void MPLA(int**data,int w[][3],int dataSize){
-	int SUM[3]={0,0,0};	
+	int SUM[3]={0,0,0};	//三個分類器各自的總和 
 	int sum=0;
-	int correct=0;
-	int Max_i=0;
-	int new_w[3][3]={{0,0,0},{0,0,0},{0,0,0}};
-	int c=1;
+	int correct=0; //分類正確的分類器個數 
+	int Max_i=0; //最大值索引 
+	int new_w[3][3]={{0,0,0},{0,0,0},{0,0,0}}; //更新的權重 
+	int c=1; //學習速率 
 	while(correct!=3){
 		for(int k=0;k<3;k++){
 			for(int i=0;i<3;i++){ //控制第i橫排 
@@ -77,18 +77,18 @@ void MPLA(int**data,int w[][3],int dataSize){
 			}
 			Max_i=findMax(SUM,3);  //得到最大的 分類器SUM序號 
 			printf("Max_i=%d\n",Max_i);
-			if(Max_i!=k){  //判斷調整權重 
+			if(Max_i!=k){  //如果資料類別判斷錯誤，調整權重
 				printf("MAX_I!=K\n");
 				for(int i=0;i<3;i++){ //控制第i橫排 
 					for(int j=0;j<3;j++){ //控制第j直行 
-						if(i==k){
+						if(i==k){ // 第k個資料點調整權重方法  
 							new_w[i][j]=w[i][j]+c*data[k][j];
 							printf("i==K，new w %d = old w %d + data %d\n",new_w[i][j],w[i][j],c*data[k][j]);
 							w[i][j]=new_w[i][j];
 							printf("if    data[k][j]=%d\n",data[k][j]);
 							
 						} 
-					 	else{
+					 	else{ //其他資料點調整權重之方法  
 					 		new_w[i][j]=w[i][j]-c*data[k][j];
 							printf("i!=K，new w %d = old w %d - data %d\n",new_w[i][j],w[i][j],c*data[k][j]);
 							w[i][j]=new_w[i][j];
@@ -99,16 +99,16 @@ void MPLA(int**data,int w[][3],int dataSize){
 				printf("===要跳離correct=0   Max_i!=k====\n"); 
 			}
 			else{
-				correct++;
+				correct++; // 正確分類器  
 				printf("===要跳離correct++   Max_i!=k====\n"); 
-				if(correct==3){
+				if(correct==3){ //跳離for迴圈，表示3個分類器都正確，不用再更新  
 					printf("=====現在第%d次正確=======\n\n\n",correct);	
 					break;	
 				}				
 			}
 			printf("=====現在在%d行=======\n\n\n",k);
 		}
-		if(correct==3){
+		if(correct==3){ //跳離while迴圈，表示3個分類器都正確，不用再更新   
 			printf("=====現在第%d次正確=======\n\n\n",correct);	
 			break;	
 		}
@@ -130,5 +130,12 @@ int main(int argc, char** argv){
 	printf("data_row=%d,data_col=%d\n",data_row,data_col);
 	readData(data,data_row,data_col);
 	MPLA(data,w,3);
+	for(int i=0;i<data_row;i++){  //分類器各自權重 
+		printf("%dW=",i);
+		for(int j=0;j<data_col;j++){
+			printf("%d,",w[i][j]);
+		}
+		printf("\n");
+	}	
   	return 0;
 }
