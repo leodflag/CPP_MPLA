@@ -68,34 +68,50 @@ void MPLA(int**data,int w[][3],int dataSize){
 			for(int i=0;i<3;i++){ //控制第i橫排 
 				for(int j=0;j<3;j++){ //控制第j直行 
 					sum+=w[i][j]*data[k][j];  //帶入並計算3個分類器的sum 
+					printf("sum+=w*x=:%d+=%d*%d\n",sum,w[i][j],data[k][j]);
 				}
 				SUM[i]=sum;
 				sum=0;
+				printf("======j行結束，現在在i行=======\n");
+				printf("SUM[%d]=%d\n",i,SUM[i]);
 			}
 			Max_i=findMax(SUM,3);  //得到最大的 分類器SUM序號 
+			printf("Max_i=%d\n",Max_i);
 			if(Max_i!=k){  //判斷調整權重 
+				printf("MAX_I!=K\n");
 				for(int i=0;i<3;i++){ //控制第i橫排 
 					for(int j=0;j<3;j++){ //控制第j直行 
 						if(i==k){
 							new_w[i][j]=w[i][j]+c*data[k][j];
+							printf("i==K，new w %d = old w %d + data %d\n",new_w[i][j],w[i][j],c*data[k][j]);
 							w[i][j]=new_w[i][j];
+							printf("if    data[k][j]=%d\n",data[k][j]);
 							
 						} 
 					 	else{
 					 		new_w[i][j]=w[i][j]-c*data[k][j];
-							w[i][j]=new_w[i][j];				 		
+							printf("i!=K，new w %d = old w %d - data %d\n",new_w[i][j],w[i][j],c*data[k][j]);
+							w[i][j]=new_w[i][j];
+							printf("else   data[k][j]=%d\n",data[k][j]);					 		
 						 }
 					}
 				}
+				printf("===要跳離correct=0   Max_i!=k====\n"); 
 			}
 			else{
 				correct++;
-				if(correct==3)
+				printf("===要跳離correct++   Max_i!=k====\n"); 
+				if(correct==3){
+					printf("=====現在第%d次正確=======\n\n\n",correct);	
 					break;	
+				}				
 			}
+			printf("=====現在在%d行=======\n\n\n",k);
 		}
-		if(correct==3)
+		if(correct==3){
+			printf("=====現在第%d次正確=======\n\n\n",correct);	
 			break;	
+		}
 	}		
 }
 int main(int argc, char** argv){ 
@@ -114,12 +130,5 @@ int main(int argc, char** argv){
 	printf("data_row=%d,data_col=%d\n",data_row,data_col);
 	readData(data,data_row,data_col);
 	MPLA(data,w,3);
-	for(int i=0;i<data_row;i++){
-		printf("%dW=",i);
-		for(int j=0;j<data_col;j++){
-			printf("%d,",w[i][j]);
-		}
-		printf("\n");
-	}
   	return 0;
 }
