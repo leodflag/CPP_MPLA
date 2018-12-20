@@ -56,26 +56,29 @@ int findMax(int sum[],int sum_len){
 	else
 		return Max_i;	
 }
-void MPLA(int**data,int w[][3],int dataSize){
-	int SUM[3]={0,0,0};	//三個分類器各自的總和 
+void MPLA(int **data,int **w,int data_row,int data_col, int dataSize){
+	int SUM[dataSize]={0};	//三個分類器各自的總和 
 	int sum=0;
 	int correct=0; //分類正確的分類器個數 
 	int Max_i=0; //最大值索引 
-	int new_w[3][3]={{0,0,0},{0,0,0},{0,0,0}}; //更新的權重 
+	int **new_w;//宣告w矩陣
+	new_w=new int *[data_row];
+	for(int i=0;i<data_row;i++)
+		new_w[i]=new int[data_col]; 	
 	int c=1; //學習速率 
-	while(correct!=3){
-		for(int k=0;k<3;k++){ //第k個資料點 
-			for(int i=0;i<3;i++){ //控制第i橫排 
-				for(int j=0;j<3;j++){ //控制第j直行 
+	while(correct!=dataSize){
+		for(int k=0;k<dataSize;k++){
+			for(int i=0;i<data_row;i++){ //控制第i橫排 
+				for(int j=0;j<data_col;j++){ //控制第j直行 
 					sum+=w[i][j]*data[k][j];  //帶入並計算3個分類器的sum 
 				}
 				SUM[i]=sum;
 				sum=0;
 			}
-			Max_i=findMax(SUM,3);  //得到最大的 分類器SUM序號 
+			Max_i=findMax(SUM,dataSize);  //得到最大的 分類器SUM序號 
 			if(Max_i!=k){  //如果資料類別判斷錯誤，調整權重
-				for(int i=0;i<3;i++){ //控制第i橫排 
-					for(int j=0;j<3;j++){ //控制第j直行 
+				for(int i=0;i<data_row;i++){ //控制第i橫排 
+					for(int j=0;j<data_col;j++){ //控制第j直行 
 						if(i==k){  // 第k個資料點調整權重方法 
 							new_w[i][j]=w[i][j]+c*data[k][j];  
 							w[i][j]=new_w[i][j];
@@ -89,36 +92,44 @@ void MPLA(int**data,int w[][3],int dataSize){
 			}
 			else{
 				correct++;  // 正確分類器 
-				if(correct==3) //跳離for迴圈，表示3個分類器都正確，不用再更新 
+				if(correct==dataSize) //跳離for迴圈，表示3個分類器都正確，不用再更新 
 					break;	
 			}
 		}
-		if(correct==3) //跳離while迴圈，表示3個分類器都正確，不用再更新 
+		if(correct==dataSize) //跳離while迴圈，表示3個分類器都正確，不用再更新 
 			break;	
 	}		
 }
 int main(int argc, char** argv){ 
-	int w[3][3]={{0,0,0},{0,0,0},{0,0,0}};	//初始權重 
-	int new_w[3][3]={{0,0,0},{0,0,0},{0,0,0}};  //新權重 
 	int size[]={}; //檔案size 
 	int data_row;  //資料筆數 
 	int data_col;  //資料參數
 	getDataSize(size); //取得資料內容大小 
 	data_row=size[0];
 	data_col=size[1];
+	int dataSize=data_row;
+	int **w;//宣告w矩陣
+	w=new int *[data_row];
+	for(int i=0;i<data_row;i++)
+		w[i]=new int[data_col];     
+	for(int i=0;i<data_row;i++){  //初始化權重 
+		for(int j=0;j<data_col;j++){
+			w[i][j]=0;
+		}
+	}	
+		
 	int **data; //宣告data矩陣 
 	data=new int *[data_row];
-	for(int i=0;i<data_col;i++)
+	for(int i=0;i<data_row;i++)
 		data[i]=new int[data_col]; 
-	printf("data_row=%d,data_col=%d\n",data_row,data_col);
 	readData(data,data_row,data_col);
-	MPLA(data,w,3);
+	MPLA(data,w,data_row,data_col,data_row);
 	for(int i=0;i<data_row;i++){  //分類器各自權重 
 		printf("%dW=",i);
 		for(int j=0;j<data_col;j++){
 			printf("%d,",w[i][j]);
 		}
 		printf("\n");
-	}
+	}	
   	return 0;
 }
