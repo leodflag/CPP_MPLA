@@ -1,7 +1,8 @@
 #include <iostream>
 #include <fstream> // file stream
 #include <sstream>// string stream 
-#include <string> 
+#include <string>
+#include <climits>
 using namespace std; 
 void getDataSize(int size[]){
 	//stringstream url,string url
@@ -17,7 +18,7 @@ void getDataSize(int size[]){
 	}		
 }
 void readData(int ** data, int r, int c){
-	ifstream file("data.csv");  //以默認輸入方式打開文件 
+	ifstream file("data1.csv");  //以默認輸入方式打開文件 
 	string line1;
 	getline(file,line1);
 	for(int row=0;row<r;++row){

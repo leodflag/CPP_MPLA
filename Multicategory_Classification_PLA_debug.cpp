@@ -1,10 +1,11 @@
 #include <iostream>
 #include <fstream> // file stream
 #include <sstream>// string stream 
-#include <string> 
+#include <string>
+#include <climits>
 using namespace std; 
 void getDataSize(int size[]){
-	ifstream file("data2.csv");  //以默認輸入方式打開文件 
+	ifstream file("data.csv");  //以默認輸入方式打開文件 
 	string line;
 	getline(file,line);  //從輸入流讀入字符存到string變量，直到沒有讀入字符、返回false 
 	stringstream count(line);  //將一個字符串變量的值傳遞給istringstream對象 count
@@ -17,7 +18,7 @@ void getDataSize(int size[]){
 }
 
 void readData(int ** data, int r, int c){
-	ifstream file("data2.csv");  //以默認輸入方式打開文件 
+	ifstream file("data.csv");  //以默認輸入方式打開文件 
 	string line1;
 	getline(file,line1);
 	for(int row=0;row<r;++row){
@@ -75,7 +76,7 @@ void MPLA(int **data,int **w,int data_row,int data_col, int dataSize){
 				}
 				SUM[i]=sum;
 				sum=0;
-				printf("======j行結束，現在在i行=======\n");
+				printf("======j_end,   row_%d=======\n",i );
 				printf("SUM[%d]=%d\n",i,SUM[i]);
 			}
 			Max_i=findMax(SUM,dataSize);  //得到最大的 分類器SUM序號 
@@ -86,33 +87,33 @@ void MPLA(int **data,int **w,int data_row,int data_col, int dataSize){
 					for(int j=0;j<data_col;j++){ //控制第j直行 
 						if(i==k){ // 第k個資料點調整權重方法  
 							new_w[i][j]=w[i][j]+c*data[k][j];
-							printf("i==K，new w %d = old w %d + data %d\n",new_w[i][j],w[i][j],c*data[k][j]);
+							printf("i==K,  new w %d = old w %d + data %d\n",new_w[i][j],w[i][j],c*data[k][j]);
 							w[i][j]=new_w[i][j];
 							printf("if    data[k][j]=%d\n",data[k][j]);
 							
 						} 
 					 	else{ //其他資料點調整權重之方法  
 					 		new_w[i][j]=w[i][j]-c*data[k][j];
-							printf("i!=K，new w %d = old w %d - data %d\n",new_w[i][j],w[i][j],c*data[k][j]);
+							printf("i!=K,  new w %d = old w %d - data %d\n",new_w[i][j],w[i][j],c*data[k][j]);
 							w[i][j]=new_w[i][j];
 							printf("else   data[k][j]=%d\n",data[k][j]);					 		
 						 }
 					}
 				}
-				printf("===要跳離correct=0   Max_i!=k====\n"); 
+				printf("===out  correct=0   Max_i!=k====\n"); 
 			}
 			else{
 				correct++; // 正確分類器  
-				printf("===要跳離correct++   Max_i!=k====\n"); 
+				printf("===out  correct++   Max_i!=k====\n"); 
 				if(correct==dataSize){ //跳離for迴圈，表示3個分類器都正確，不用再更新  
-					printf("=====現在第%d次正確=======\n\n\n",correct);	
+					printf("=====%d  correct=======\n",correct);	
 					break;	
 				}				
 			}
-			printf("=====現在在%d行=======\n\n\n",k);
+			printf("=====row_%d=======\n",k);
 		}
 		if(correct==dataSize){ //跳離while迴圈，表示3個分類器都正確，不用再更新   
-			printf("=====現在第%d次正確=======\n\n\n",correct);	
+			printf("=====%d  correct=======\n",correct);	
 			break;	
 		}
 	}		
@@ -136,7 +137,7 @@ int main(int argc, char** argv){
 			printf("%d\n",w[i][j]);
 		}
 	}	
-		
+	
 	int **data; //宣告data矩陣 
 	data=new int *[data_row];
 	for(int i=0;i<data_row;i++)
