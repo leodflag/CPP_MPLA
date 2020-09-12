@@ -1,8 +1,8 @@
 # CPP_MPLA
 
 ## 說明
-![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/Description1.png)
-![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/Description2.png)
+![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/img/Description1.png)
+![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/img/Description2.png)
 
 ## 虛擬碼
     1. 從csv檔取得資料
@@ -21,14 +21,14 @@ data <br>
 0,0,1 <br>
 1,1,1 <br>
 -1,1,1  <br>
-![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/data_result_weight.png)
+![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/img/data_result_weight.png)
 
 data1 <br>
 3,3 <br>
 2,4,1 <br>
 4,1,1 <br>
 -1,-1,1 <br>
-![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/data1_result_weight.png)
+![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/img/data1_result_weight.png)
 
 data2 <br>
 4,3 <br>
@@ -36,10 +36,10 @@ data2 <br>
 1,1,1 <br>
 1,-2,1 <br>
 -1,0,1 <br>
-![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/data1_result_weight.png)
+![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/img/data1_result_weight.png)
 
 ## 文章
-![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/Q1.jpg)
-![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/Q2.jpg)
-![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/Q3.jpg)
-![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/Q4.jpg)
+![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/img/Q1.jpg)
+![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/img/Q2.jpg)
+![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/img/Q3.jpg)
+![image](https://github.com/leodflag/CPP_Multicategory-Classification_PLA/blob/master/img/Q4.jpg)
